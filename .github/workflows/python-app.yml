@@ -10,7 +10,7 @@ on:
     branches: [ main ]
 
 jobs:
-  build:
+  test:
 
     runs-on: ubuntu-latest
 
@@ -49,4 +49,13 @@ jobs:
 
       - name: Code Quality
         working-directory: ./python
-        run: poetry run black . --check
+        run: |
+          poetry check
+          poetry run black . --check
+          poetry run mypy .
+          poetry run flake8 .
+
+      - name: Unit Tests
+        working-directory: ./python
+        run: |
+          poetry run pytest tests
