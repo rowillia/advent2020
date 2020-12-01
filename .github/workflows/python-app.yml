@@ -43,10 +43,10 @@ jobs:
           poetry config virtualenvs.path ~/.virtualenvs
 
       - name: Install Dependencies
-        working-directory: ~/python
+        working-directory: ./python
         run: poetry install
         if: steps.cache.outputs.cache-hit != 'true'
 
       - name: Code Quality
-        working-directory: ~/python
+        working-directory: ./python
         run: poetry run black . --check
