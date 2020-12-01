@@ -15,37 +15,38 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
-    - name: Set up Python 3.8
-      uses: actions/setup-python@v2
-      with:
-        python-version: 3.8
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 1
+      - name: Set up Python 3.8
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.8
 
-    - name: Install Poetry
-      uses: snok/install-poetry@v1.1.1
-      with:
-        path: ~/python
+      - name: Install Poetry
+        uses: snok/install-poetry@v1.1.1
+        with:
+          path: ~/python
 
-    - name: Cache Poetry virtualenv
-      uses: actions/cache@v1
-      id: cache
-      with:
-        path: ~/.virtualenvs
-        key: poetry-${{ hashFiles('**/poetry.lock') }}
-        restore-keys: |
-          poetry-${{ hashFiles('**/poetry.lock') }}
+      - name: Cache Poetry virtualenv
+        uses: actions/cache@v1
+        id: cache
+        with:
+          path: ~/.virtualenvs
+          key: poetry-${{ hashFiles('**/poetry.lock') }}
+          restore-keys: |
+            poetry-${{ hashFiles('**/poetry.lock') }}
 
-    - name: Set Poetry config
-      working-directory: ~/python/
-      run: |
-        poetry config virtualenvs.in-project false
-        poetry config virtualenvs.path ~/.virtualenvs
+      - name: Set Poetry config
+        run: |
+          poetry config virtualenvs.in-project false
+          poetry config virtualenvs.path ~/.virtualenvs
 
-    - name: Install Dependencies
-      working-directory: ~/python/
-      run: poetry install
-      if: steps.cache.outputs.cache-hit != 'true'
+      - name: Install Dependencies
+        working-directory: ~/python
+        run: poetry install
+        if: steps.cache.outputs.cache-hit != 'true'
 
-    - name: Code Quality
-      working-directory: ~/python/
-      run: poetry run black . --check
+      - name: Code Quality
+        working-directory: ~/python
+        run: poetry run black . --check
