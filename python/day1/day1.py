@@ -15,8 +15,13 @@ def two_sum(values: Iterable[int], target: int) -> Iterator[Tuple[int, int]]:
 
 
 def three_sum(values: Iterable[int], target: int) -> Iterator[Tuple[int, int, int]]:
-    for value in values:
-        yield from (x + (value,) for x in two_sum(values, target - value))
+    for i, value in enumerate(values):
+        yield from (
+            x + (value,)
+            for x in two_sum(
+                ((y for j, y in enumerate(values) if j != i)), target - value
+            )
+        )
 
 
 def main() -> None:
