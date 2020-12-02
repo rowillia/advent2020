@@ -8,6 +8,6 @@ def test_two_sum() -> None:
 
 
 def test_three_sum() -> None:
-    assert next(three_sum([1, 2, 3], 4), None) == None
-    assert next(three_sum([0, 3], 6), None) == None
+    assert next(three_sum([1, 2, 3], 4), None) is None
+    assert next(three_sum([0, 3], 6), None) is None
     assert next(three_sum([1, 2, 3], 6), None) == (3, 2, 1)
