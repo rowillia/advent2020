@@ -13,6 +13,7 @@ mypy = "^0.790"
 black = {version = "^20.8b1", allow-prereleases = true}
 flake8 = "^3.8.4"
 ipython = "^7.19.0"
+mypy-extensions = "^0.4.3"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
